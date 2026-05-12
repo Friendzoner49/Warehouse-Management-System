@@ -10,19 +10,19 @@ A Java desktop application with JDBC for warehouse inventory management. Support
 - Git
 - JDBC drivers (PostgreSQL and/or MySQL)
 
-🗄️ Database Setup
+##🗄️ Database Setup
 
-Step 1: Create Database
+### Step 1: Create Database
 
 Choose one of the supported databases and create a new database:
 For PostgreSQL/MySQL:
 
 CREATE DATABASE warehouse_db;
 
-Step 2: Run SQL Scripts
+### Step 2: Run SQL Scripts
 Execute database/resetallsystem.sql to create tables, constraints and insert test data
 
-🔧 Configuration
+## 🔧 Configuration
 Step 1: Add JDBC Drivers
 In Eclipse:
 Right-click on the project → Properties
@@ -51,7 +51,7 @@ Important:
 - Update db.url if your database is on a different host or port
 - To switch between databases, simply change the db.driver and db.url values
 
-🚀 Running the Application
+## 🚀 Running the Application
 Using Eclipse:
 1.Import Project:
 Open Eclipse
