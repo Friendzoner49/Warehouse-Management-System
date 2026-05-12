@@ -10,7 +10,7 @@ A Java desktop application with JDBC for warehouse inventory management. Support
 - Git
 - JDBC drivers (PostgreSQL and/or MySQL)
 
-##🗄️Database Setup
+## 🗄️Database Setup
 
 ### Step 1: Create Database
 
