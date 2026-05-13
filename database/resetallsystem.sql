@@ -3,7 +3,7 @@
 -- Chạy trong DBeaver với PostgreSQL
 -- =====================================================
 
--- ✅ Bước 1: Xóa toàn bộ tables (CASCADE để xóa khóa ngoại)
+-- Bước 1: Xóa toàn bộ tables (CASCADE để xóa khóa ngoại)
 DROP TABLE IF EXISTS project_invoices CASCADE;
 DROP TABLE IF EXISTS project_order_tracking CASCADE;
 DROP TABLE IF EXISTS project_orders CASCADE;
@@ -11,7 +11,7 @@ DROP TABLE IF EXISTS project_customers CASCADE;
 DROP TABLE IF EXISTS project_products CASCADE;
 DROP TABLE IF EXISTS project_users CASCADE;
 
--- ✅ Bước 2: Tạo lại tables
+-- Bước 2: Tạo lại tables
 CREATE TABLE project_users (
     id SERIAL PRIMARY KEY,
     username VARCHAR(50) UNIQUE NOT NULL,
@@ -30,7 +30,7 @@ CREATE TABLE project_customers (
 CREATE TABLE project_products (
     id SERIAL PRIMARY KEY,
     name VARCHAR(100) NOT NULL,
-    unit VARCHAR(20) DEFAULT 'cái',
+    unit VARCHAR(20) DEFAULT 'pcs',
     price DECIMAL(10,2) CHECK (price > 0) NOT NULL,
     stock_qty INTEGER DEFAULT 0 CHECK (stock_qty >= 0)
 );
@@ -63,27 +63,30 @@ CREATE TABLE project_invoices (
 
 -- Users
 INSERT INTO project_users(username, password, role) VALUES 
-('admin', 'admin123', 'ADMIN'),
+('admin', '123', 'ADMIN'),
 ('manager1', '123456', 'ORDER_MANAGER'),
 ('manager2', '123456', 'ORDER_MANAGER');
 
 -- Customers
 INSERT INTO project_customers(full_name, phone, email, address) VALUES 
-('Nguyễn Văn A', '0901111111', 'a@mail.com', 'Hà Nội'),
-('Trần Thị B', '0902222222', 'b@mail.com', 'TP.HCM'),
-('Lê Văn C', '0903333333', 'c@mail.com', 'Đà Nẵng'),
-('Phạm Thị D', '0904444444', 'd@mail.com', 'Hải Phòng'),
-('Hoàng Văn E', '0905555555', 'e@mail.com', 'Cần Thơ');
+('Nesterov Sergey Alexandrovich', '0901111111', 'a@mail.com', 'Saint Petersburg, Russia'),
+('Akimov Mir', '0902222222', 'b@mail.com', 'Saint Petersburg'),
+('John Smith', '+1-212-555-0101', 'john.smith@email.com', 'New York, USA'),
+('Jane Doe', '+44-20-7946-0958', 'jane.doe@email.com', 'London, UK'),
+('Michael Brown', '+1-312-555-0198', 'm.brown@email.com', 'Chicago, USA'),
+('Emily Davis', '+61-2-9876-5432', 'emily.d@email.com', 'Sydney, Australia'),
+('Vu Manh Hung', '+84902242003', 'hehee@gmail.com', 'Hanoi, Vietnam'),
+('David Wilson', '+1-416-555-0147', 'd.wilson@email.com', 'Toronto, Canada');
 
 -- Products
 INSERT INTO project_products(name, unit, price, stock_qty) VALUES 
-('Laptop Dell Inspiron 15', 'chiếc', 15000000, 10),
-('Chuột Logitech M330', 'cái', 250000, 50),
-('Bàn phím cơ Corsair K70', 'cái', 800000, 30),
-('Màn hình LG 24 inch', 'chiếc', 4500000, 15),
-('Ổ cứng SSD Samsung 500GB', 'cái', 1200000, 40),
-('RAM DDR4 8GB', 'thanh', 650000, 60),
-('Tai nghe Sony WH-1000XM4', 'cái', 3500000, 20);
+('Dell Inspiron 15 Laptop', 'pcs', 15000000, 10),
+('Logitech M330 Wireless Mouse', 'pcs', 250000, 50),
+('Corsair K70 Mechanical Keyboard', 'pcs', 800000, 30),
+('LG 24-inch Monitor', 'pcs', 4500000, 15),
+('Samsung 500GB NVMe SSD', 'pcs', 1200000, 40),
+('DDR4 8GB RAM Module', 'stick', 650000, 60),
+('Sony WH-1000XM4 Headphones', 'pcs', 3500000, 20);
 
 -- Orders (mẫu)
 INSERT INTO project_orders(customer_id, created_by, total_amount) VALUES 
