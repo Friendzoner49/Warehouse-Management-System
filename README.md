@@ -24,7 +24,7 @@ Execute database/resetallsystem.sql to create tables, constraints and insert tes
 
 ## 🔧 Configuration
 ### Step 1: Add JDBC Drivers
-In Eclipse:
+**In Eclipse:**
 
 Right-click on the project → Properties
 
@@ -66,7 +66,7 @@ db.driver=com.mysql.cj.jdbc.Driver
 
 ## 🚀 Running the Application
 ### Using Eclipse:
-1. Import Project:
+#### 1. Import Project:
 
 Open Eclipse
 
@@ -80,7 +80,7 @@ Browse to the project folder
 
 Click Finish
 
-2. Build Path Setup:
+#### 2. Build Path Setup:
 
 Right-click on the project → Properties
 
@@ -88,7 +88,7 @@ Go to Java Build Path → Libraries
 
 Add JDBC drivers from the lib folder (if not already added)
 
-3. Run Application:
+#### 3. Run Application:
 
 Navigate to src/application/ folder
 
@@ -104,6 +104,7 @@ javac -cp "lib/*:src" -d bin src/application/*.java src/project1/*.java
 
 #### Run the application
 java -cp "bin:lib/*" application.Main
+
 
 Note for Windows users: Use ; instead of : in classpath
 
