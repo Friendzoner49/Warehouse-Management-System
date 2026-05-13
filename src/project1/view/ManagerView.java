@@ -91,10 +91,10 @@ public class ManagerView {
         
         customersTable.getColumns().addAll(colId, colName, colPhone, colEmail, colAddress);
         
-        Button btnAdd = new Button("➕ Add");
-        Button btnEdit = new Button("✏️ Edit");
-        Button btnDelete = new Button("❌ Delete");
-        Button btnRefresh = new Button("🔄 Refresh");
+        Button btnAdd = new Button("Add");
+        Button btnEdit = new Button("Edit");
+        Button btnDelete = new Button("Delete");
+        Button btnRefresh = new Button("Refresh");
         
         btnAdd.setOnAction(e -> showCustomerDialog(null));
         btnEdit.setOnAction(e -> {
@@ -227,10 +227,10 @@ public class ManagerView {
                     // Refresh table
                     ordersTable.setItems(OrderDAO.getAllOrders());
                     
-                    showAlert("✅ Order #" + selected.getId() + " has been deleted!");
+                    showAlert("Order #" + selected.getId() + " has been deleted!");
                 }
             } else {
-                showAlert("⚠️ Please select an order to delete!");
+                showAlert("Please select an order to delete!");
             }
         });
         
@@ -312,19 +312,19 @@ public class ManagerView {
         
         // Thông tin đơn hàng
         VBox infoBox = new VBox(10,
-            new Label("📋 Order ID: " + order.getId()),
-            new Label("👤 Customer: " + order.getCustomerName()),
-            new Label("📅 Date: " + order.getOrderDate().toString()),
-            new Label("💰 Total Amount: " + String.format("%.2f ₽", order.getTotalAmount())),
+            new Label("Order ID: " + order.getId()),
+            new Label("Customer: " + order.getCustomerName()),
+            new Label("Date: " + order.getOrderDate().toString()),
+            new Label("Total Amount: " + String.format("%.2f ₽", order.getTotalAmount())),
             new Separator(),
-            new Label("📦 Delivery Status: " + TrackingDAO.getOrderDeliveryStatus(order.getId())),
+            new Label("Delivery Status: " + TrackingDAO.getOrderDeliveryStatus(order.getId())),
             new Label(" Payment Status: " + paymentStatus)  // ✅ Hiển thị trạng thái thanh toán
         );
         infoBox.setPadding(new Insets(15));
         infoBox.setStyle("-fx-background-color: #f0f8ff; -fx-border-radius: 5; -fx-background-radius: 5;");
         
         // Bảng tracking
-        Label lblTracking = new Label("📦 Order Items:");
+        Label lblTracking = new Label("Order Items:");
         lblTracking.setStyle("-fx-font-weight: bold; -fx-font-size: 14px;");
         
         TableView<OrderTracking> trackingTable = new TableView<>();
@@ -358,7 +358,7 @@ public class ManagerView {
         
         // Tính doanh thu
         double revenue = TrackingDAO.getOrderTotal(order.getId());
-        Label lblRevenue = new Label("💵 Total Revenue: " + String.format("%.2f ₽", revenue));
+        Label lblRevenue = new Label("Total Revenue: " + String.format("%.2f ₽", revenue));
         lblRevenue.setStyle("-fx-font-weight: bold; -fx-font-size: 14px; -fx-text-fill: #2a5298;");
         
         // Nút đóng

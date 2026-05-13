@@ -27,12 +27,12 @@ public class OrderStatusDialog {
     private void buildUI() {
         dialog = new Stage();
         dialog.initModality(Modality.APPLICATION_MODAL);
-        dialog.setTitle("Cập nhật trạng thái - Đơn #" + order.getId());
+        dialog.setTitle("Update status - Order #" + order.getId());
 
         Label lblTitle = new Label("ORDER STATUS UPDATE");
         lblTitle.setStyle("-fx-font-size: 16px; -fx-font-weight: bold; -fx-text-fill: #2a5298;");
 
-        Label lblInfo = new Label("Mã đơn: " + order.getId() + " | Khách hàng: " + order.getCustomerName());
+        Label lblInfo = new Label("Order ID: " + order.getId() + " | Customer: " + order.getCustomerName());
         lblInfo.setStyle("-fx-font-size: 13px;");
 
         // Trạng thái giao hàng
@@ -56,8 +56,8 @@ public class OrderStatusDialog {
         statusBox.setPadding(new Insets(15));
         statusBox.setStyle("-fx-background-color: #f8f9fa; -fx-border-color: #dee2e6; -fx-border-radius: 5;");
 
-        Button btnSave = new Button("💾 Lưu thay đổi");
-        Button btnCancel = new Button("❌ Hủy");
+        Button btnSave = new Button("Save changes");
+        Button btnCancel = new Button("Cancel");
         btnSave.setStyle("-fx-background-color: #28a745; -fx-text-fill: white; -fx-font-weight: bold;");
         btnCancel.setStyle("-fx-background-color: #dc3545; -fx-text-fill: white; -fx-font-weight: bold;");
 
@@ -81,23 +81,23 @@ public class OrderStatusDialog {
         String payment = cbPayment.getValue();
 
         if (delivery == null || payment == null) {
-            showAlert("⚠️ Vui lòng chọn đầy đủ trạng thái!");
+            showAlert("Please select the full status!");
             return;
         }
 
         try {
             TrackingDAO.updateOrderDeliveryStatus(order.getId(), delivery);
             InvoiceDAO.updateOrCreateInvoiceStatus(order.getId(), currentUserId, payment);
-            showAlert("✅ Cập nhật thành công!");
+            showAlert("Update successful!");
             dialog.close();
         } catch (Exception e) {
-            showAlert("❌ Lỗi: " + e.getMessage());
+            showAlert("Errors: " + e.getMessage());
         }
     }
 
     private void showAlert(String msg) {
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
-        alert.setTitle("Thông báo");
+        alert.setTitle("Notification");
         alert.setContentText(msg);
         alert.initOwner(dialog);
         alert.showAndWait();
