@@ -592,9 +592,9 @@ public class AdminView {
         btnReset.setOnAction(e -> {
             // ✅ Cảnh báo lần 1
             Alert warning1 = new Alert(Alert.AlertType.WARNING);
-            warning1.setTitle("⚠️ CẢNH BÁO NGUY HIỂM");
-            warning1.setHeaderText("HÀNH ĐỘNG NÀY SẼ XÓA TOÀN BỘ DỮ LIỆU!");
-            warning1.setContentText("Tất cả đơn hàng, khách hàng, sản phẩm sẽ bị xóa vĩnh viễn.\n\nBạn có chắc chắn muốn tiếp tục?");
+            warning1.setTitle("DANGER WARNING");
+            warning1.setHeaderText("THIS ACTION WILL DELETE ALL DATA!");
+            warning1.setContentText("All orders, customers, and products will be permanently deleted.\n\nAre you sure you want to continue?");
             warning1.getButtonTypes().clear();
             warning1.getButtonTypes().addAll(ButtonType.YES, ButtonType.NO);
             
@@ -627,7 +627,7 @@ public class AdminView {
             if (result.isPresent() && "admin123".equals(result.get())) {
                 // ✅ Mật khẩu đúng - Xác nhận lần cuối
                 Alert warning2 = new Alert(Alert.AlertType.ERROR);
-                warning2.setTitle("⚠️ FINAL CONFIRMATION");
+                warning2.setTitle("FINAL CONFIRMATION");
                 warning2.setHeaderText("THE DATABASE WILL BE COMPLETELY DELETED!");
                 warning2.setContentText("Press OK to delete ALL data and close the program.\n\nIRREVERSIBLE ACTION!");
                 warning2.getButtonTypes().clear();
@@ -637,7 +637,7 @@ public class AdminView {
                     try {
                         resetDatabase();
                         showAlert("The database has been successfully reset!\n\nThe program will close now.");
-                        System.exit(0); // ✅ Đóng chương trình
+                        System.exit(0);
                     } catch (Exception ex) {
                         showAlert("❌ Error when reset database: " + ex.getMessage());
                         ex.printStackTrace();
@@ -656,19 +656,27 @@ public class AdminView {
              Statement stmt = conn.createStatement()) {
             
             // Xóa dữ liệu theo thứ tự ngược lại với khóa ngoại
-            stmt.execute("DELETE FROM project_invoices");
-            stmt.execute("DELETE FROM project_order_tracking");
-            stmt.execute("DELETE FROM project_orders");
-            stmt.execute("DELETE FROM project_customers");
-            stmt.execute("DELETE FROM project_products");
-            stmt.execute("DELETE FROM project_users WHERE username != 'admin'"); // Giữ lại admin
+//            stmt.execute("DELETE FROM project_invoices");
+//            stmt.execute("DELETE FROM project_order_tracking");
+//            stmt.execute("DELETE FROM project_orders");
+//            stmt.execute("DELETE FROM project_customers");
+//            stmt.execute("DELETE FROM project_products");
+//            stmt.execute("DELETE FROM project_users WHERE username != 'admin'"); // Giữ lại admin
             
             // Reset sequence (PostgreSQL)
-            stmt.execute("ALTER SEQUENCE project_products_id_seq RESTART WITH 1");
-            stmt.execute("ALTER SEQUENCE project_customers_id_seq RESTART WITH 1");
-            stmt.execute("ALTER SEQUENCE project_orders_id_seq RESTART WITH 1");
-            stmt.execute("ALTER SEQUENCE project_invoices_id_seq RESTART WITH 1");
-            stmt.execute("ALTER SEQUENCE project_order_tracking_id_seq RESTART WITH 1");
+//            stmt.execute("ALTER SEQUENCE project_products_id_seq RESTART WITH 1");
+//            stmt.execute("ALTER SEQUENCE project_customers_id_seq RESTART WITH 1");
+//            stmt.execute("ALTER SEQUENCE project_orders_id_seq RESTART WITH 1");
+//            stmt.execute("ALTER SEQUENCE project_invoices_id_seq RESTART WITH 1");
+//            stmt.execute("ALTER SEQUENCE project_order_tracking_id_seq RESTART WITH 1");
+        	
+        	 stmt.execute("DROP TABLE IF EXISTS project_invoices CASCADE");
+        	 stmt.execute("DROP TABLE IF EXISTS project_order_tracking CASCADE");
+        	 stmt.execute("DROP TABLE IF EXISTS project_orders CASCADE");
+        	 stmt.execute("DROP TABLE IF EXISTS project_customers CASCADE");
+        	 stmt.execute("DROP TABLE IF EXISTS project_products CASCADE");
+        	 stmt.execute("DROP TABLE IF EXISTS project_users CASCADE");
+        	 
             
             System.out.println(" The database has been successfully reset.!");
         }
