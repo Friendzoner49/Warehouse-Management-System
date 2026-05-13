@@ -28,13 +28,13 @@ Execute database/resetallsystem.sql to create tables, constraints and insert tes
 
 Right-click on the project → Properties
 
-Go to "Java Build Path" → "Libraries" tab
+Go to **Java Build Path** → **Libraries** tab
 
-Click "Add External JARs..."
+Click **Add External JARs...**
 
 Select all JAR files from the lib folder
 
-Click "Apply and Close"
+Click **Apply and Close**
 
 ### Step 2: Configure Database Connection
 Open src/config.properties and update the settings:
@@ -70,11 +70,9 @@ db.driver=com.mysql.cj.jdbc.Driver
 
 Open Eclipse
 
-Go to File → Import
+Go to **File** → **Import** → **Select Existing Projects into Workspace**
 
-Select Existing Projects into Workspace
-
-Click Next
+Click **Next**
 
 Browse to the project folder
 
@@ -84,7 +82,7 @@ Click Finish
 
 Right-click on the project → Properties
 
-Go to Java Build Path → Libraries
+Go to **Java Build Path** → **Libraries**
 
 Add JDBC drivers from the lib folder (if not already added)
 
