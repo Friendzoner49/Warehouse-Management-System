@@ -114,14 +114,14 @@ public class OrderCreationDialog {
         txtQuantity = new TextField("1");
         txtQuantity.setPrefWidth(80);
         
-        Button btnAddProduct = new Button("Add to Order");
+        Button btnAddProduct = new Button("➕ Add to Order");
         btnAddProduct.setStyle("-fx-background-color: #4CAF50; -fx-text-fill: white; -fx-font-weight: bold;");
         btnAddProduct.setOnAction(e -> {
             Product selected = lstProducts.getSelectionModel().getSelectedItem();
             if (selected != null) {
                 addProductToOrder(selected);
             } else {
-                showAlert("Please select a product from the list!");
+                showAlert("⚠️ Please select a product from the list!");
             }
         });
         
@@ -163,8 +163,8 @@ public class OrderCreationDialog {
         lblTotal.setStyle("-fx-font-size: 16px; -fx-font-weight: bold; -fx-text-fill: #2a5298;");
         
         // Nút điều khiển
-        Button btnSave = new Button("Save Order");
-        Button btnCancel = new Button("Cancel");
+        Button btnSave = new Button("💾 Save Order");
+        Button btnCancel = new Button("❌ Cancel");
         
         btnSave.setStyle("-fx-background-color: #2196F3; -fx-text-fill: white; -fx-font-weight: bold; -fx-padding: 8 20 8 20;");
         btnCancel.setStyle("-fx-background-color: #f44336; -fx-text-fill: white; -fx-font-weight: bold; -fx-padding: 8 20 8 20;");
@@ -230,7 +230,7 @@ public class OrderCreationDialog {
         // Nút xóa
         TableColumn<OrderItem, Void> colAction = new TableColumn<>("Action");
         colAction.setCellFactory(param -> new TableCell<OrderItem, Void>() {
-            private final Button btn = new Button("Remove");
+            private final Button btn = new Button("❌ Remove");
             {
                 btn.setStyle("-fx-text-fill: #f44336; -fx-cursor: hand; -fx-font-weight: bold;");
                 btn.setOnAction(event -> {
@@ -243,7 +243,7 @@ public class OrderCreationDialog {
                                 product.getStockQty() + item.getQuantity());
                         }
                         items.remove(item);
-                        showAlert("Product removed from order and stock restored!");
+                        showAlert("✅ Product removed from order and stock restored!");
                     }
                 });
             }
@@ -264,7 +264,7 @@ public class OrderCreationDialog {
             if (qty <= 0) throw new NumberFormatException();
             
             if (qty > product.getStockQty()) {
-                showAlert("Insufficient stock!\n\nAvailable: " + product.getStockQty() + " units\nRequested: " + qty + " units");
+                showAlert("❌ Insufficient stock!\n\nAvailable: " + product.getStockQty() + " units\nRequested: " + qty + " units");
                 return;
             }
             
@@ -281,12 +281,12 @@ public class OrderCreationDialog {
                 // Cập nhật số lượng
                 int newQty = existing.getQuantity() + qty;
                 if (newQty > product.getStockQty()) {
-                    showAlert("Insufficient stock!\n\nAvailable: " + product.getStockQty() + " units\nCurrent in order: " + existing.getQuantity() + " units\nRequested additional: " + qty + " units");
+                    showAlert("❌ Insufficient stock!\n\nAvailable: " + product.getStockQty() + " units\nCurrent in order: " + existing.getQuantity() + " units\nRequested additional: " + qty + " units");
                     return;
                 }
                 existing.setQuantity(newQty);
                 itemsTable.refresh();
-                showAlert("Updated quantity for \"" + product.getName() + "\" to " + newQty + " units");
+                showAlert("✅ Updated quantity for \"" + product.getName() + "\" to " + newQty + " units");
             } else {
                 // Thêm mới
                 items.add(new OrderItem(
@@ -295,7 +295,7 @@ public class OrderCreationDialog {
                     qty,
                     product.getPrice()
                 ));
-                showAlert("Added \"" + product.getName() + "\" to order!");
+                showAlert("✅ Added \"" + product.getName() + "\" to order!");
             }
             
             // Trừ số lượng trong kho NGAY LẬP TỨC
@@ -310,7 +310,7 @@ public class OrderCreationDialog {
             refreshProductList();
             
         } catch (NumberFormatException e) {
-            showAlert("Please enter a valid quantity (positive number)!");
+            showAlert("⚠️ Please enter a valid quantity (positive number)!");
         }
     }
     
@@ -322,7 +322,7 @@ public class OrderCreationDialog {
         // 1. Validation khách hàng
         String customerInput = txtCustomer.getText().trim();
         if (customerInput.isEmpty()) {
-            showAlert("Please enter customer phone or email!");
+            showAlert("⚠️ Please enter customer phone or email!");
             txtCustomer.requestFocus();
             return;
         }
@@ -337,14 +337,14 @@ public class OrderCreationDialog {
         }
         
         if (customer == null) {
-            showAlert("Customer not found!\n\nPhone/Email: " + customerInput + 
+            showAlert("❌ Customer not found!\n\nPhone/Email: " + customerInput + 
                       "\n\nPlease add this customer first in the Customers tab.");
             return;
         }
         
         // ✅ THÊM KIỂM TRA ID
         if (customer.getId() <= 0) {
-            showAlert("Invalid customer ID: " + customer.getId() + 
+            showAlert("❌ Invalid customer ID: " + customer.getId() + 
                       "\n\nPlease check customer data in database.");
             return;
         }
@@ -352,13 +352,13 @@ public class OrderCreationDialog {
         // 3. Validation ngày
         LocalDate date = dpDate.getValue();
         if (date == null) {
-            showAlert("Please select an order date!");
+            showAlert("⚠️ Please select an order date!");
             return;
         }
         
         // 4. Validation sản phẩm
         if (items.isEmpty()) {
-            showAlert("Please add at least one product to the order!");
+            showAlert("⚠️ Please add at least one product to the order!");
             return;
         }
         
@@ -383,7 +383,7 @@ public class OrderCreationDialog {
             
             // 8. Kiểm tra ID đã được sinh chưa
             if (newOrder.getId() <= 0) {
-                showAlert("Error: Failed to generate Order ID!");
+                showAlert("❌ Error: Failed to generate Order ID!");
                 return;
             }
             
@@ -404,16 +404,16 @@ public class OrderCreationDialog {
             }
             
             // 10. Thông báo thành công
-            showAlert("Order created successfully!\n\n" +
+            showAlert("✅ Order created successfully!\n\n" +
                     "Order ID: " + newOrder.getId() + "\n" +
-                    "Payment Status: UNPAID\n" +  
+                    "Payment Status: UNPAID\n" +  // ✅ Thông báo trạng thái
                     "Total Amount: " + String.format("%.2f ₽", totalAmount));
             
             // 11. Đóng dialog
             dialog.close();
             
         } catch (Exception e) {
-            showAlert("Error saving order: " + e.getMessage());
+            showAlert("❌ Error saving order: " + e.getMessage());
             e.printStackTrace();
         }
     }

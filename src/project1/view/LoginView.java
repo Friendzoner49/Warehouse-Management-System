@@ -72,7 +72,6 @@ public class LoginView {
         root.getChildren().add(content);
         
         Scene scene = new Scene(root, 350, 250);
-        stage.setTitle("System Login");
         stage.setScene(scene);
         stage.show();
     }

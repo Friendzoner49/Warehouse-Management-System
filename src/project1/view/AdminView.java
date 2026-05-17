@@ -96,10 +96,10 @@ public class AdminView {
         productsTable.getColumns().addAll(colId, colName, colUnit, colPrice, colStock);
         
         // Buttons
-        Button btnAdd = new Button("Add");
-        Button btnEdit = new Button("Edit");
-        Button btnDelete = new Button("Delete");
-        Button btnRefresh = new Button("Refresh");
+        Button btnAdd = new Button("➕ Add");
+        Button btnEdit = new Button("✏️ Edit");
+        Button btnDelete = new Button("❌ Delete");
+        Button btnRefresh = new Button("🔄 Refresh");
         
         btnAdd.setOnAction(e -> showProductDialog(null));
         btnEdit.setOnAction(e -> {
@@ -161,10 +161,10 @@ public class AdminView {
         
         customersTable.getColumns().addAll(colId, colName, colPhone, colEmail, colAddress);
         
-        Button btnAdd = new Button("Add");
-        Button btnEdit = new Button("Edit");
-        Button btnDelete = new Button("Delete");
-        Button btnRefresh = new Button("Refresh");
+        Button btnAdd = new Button("➕ Add");
+        Button btnEdit = new Button("✏️ Edit");
+        Button btnDelete = new Button("❌ Delete");
+        Button btnRefresh = new Button("🔄 Refresh");
         
         btnAdd.setOnAction(e -> showCustomerDialog(null));
         btnEdit.setOnAction(e -> {
@@ -231,11 +231,11 @@ public class AdminView {
         ordersTable.getColumns().addAll(colId, colCustomer, colDate, colTotal);
         
         // ✅ THÊM CÁC NÚT ĐIỀU KHIỂN
-        Button btnAdd = new Button("Add Order");
-        Button btnView = new Button("View Details");
-        Button btnStatus = new Button("Edit Status");
-        Button btnDelete = new Button("Delete Order");
-        Button btnRefresh = new Button("Refresh");
+        Button btnAdd = new Button("➕ Add Order");
+        Button btnView = new Button("🔍 View Details");
+        Button btnStatus = new Button("📝 Edit Status");
+        Button btnDelete = new Button("❌ Delete Order");
+        Button btnRefresh = new Button("🔄 Refresh");
         
         // Style cho nút
         btnAdd.setStyle("-fx-background-color: #4CAF50; -fx-text-fill: white; -fx-font-weight: bold;");
@@ -300,7 +300,7 @@ public class AdminView {
                     showAlert("✅ Order #" + selected.getId() + " has been deleted!");
                 }
             } else {
-                showAlert("Please select an order to delete!");
+                showAlert("⚠️ Please select an order to delete!");
             }
         });
         
@@ -358,7 +358,7 @@ public class AdminView {
         
         invoicesTable.getColumns().addAll(colId, colOrderId, colDate, colStatus);
         
-        Button btnRefresh = new Button("Refresh");
+        Button btnRefresh = new Button("🔄 Refresh");
         btnRefresh.setOnAction(e -> invoicesTable.setItems(InvoiceDAO.getAllInvoices()));
         
         HBox btnBox = new HBox(10, btnRefresh);
@@ -395,7 +395,7 @@ public class AdminView {
         dialog.setTitle(product == null ? "Add Product" : "Edit Product");
         
         TextField txtName = new TextField(product == null ? "" : product.getName());
-        TextField txtUnit = new TextField(product == null ? "kg" : product.getUnit());
+        TextField txtUnit = new TextField(product == null ? "cái" : product.getUnit());
         TextField txtPrice = new TextField(String.valueOf(product == null ? 0 : product.getPrice()));
         TextField txtStock = new TextField(String.valueOf(product == null ? 0 : product.getStockQty()));
         
@@ -451,12 +451,12 @@ public class AdminView {
         
         // Thông tin đơn hàng
         VBox infoBox = new VBox(10,
-            new Label("Order ID: " + order.getId()),
-            new Label("Customer: " + order.getCustomerName()),
-            new Label("Date: " + order.getOrderDate().toString()),
-            new Label("Total Amount: " + String.format("%.2f ₽", order.getTotalAmount())),
+            new Label("📋 Order ID: " + order.getId()),
+            new Label("👤 Customer: " + order.getCustomerName()),
+            new Label("📅 Date: " + order.getOrderDate().toString()),
+            new Label("💰 Total Amount: " + String.format("%.2f ₽", order.getTotalAmount())),
             new Separator(),
-            new Label("Delivery Status: " + TrackingDAO.getOrderDeliveryStatus(order.getId())),
+            new Label("📦 Delivery Status: " + TrackingDAO.getOrderDeliveryStatus(order.getId())),
             new Label(" Payment Status: " + paymentStatus)  // ✅ Hiển thị trạng thái thanh toán
         );
         infoBox.setPadding(new Insets(15));
@@ -497,7 +497,7 @@ public class AdminView {
         
         // Tính doanh thu
         double revenue = TrackingDAO.getOrderTotal(order.getId());
-        Label lblRevenue = new Label("Total Revenue: " + String.format("%.2f ₽", revenue));
+        Label lblRevenue = new Label("💵 Total Revenue: " + String.format("%.2f ₽", revenue));
         lblRevenue.setStyle("-fx-font-weight: bold; -fx-font-size: 14px; -fx-text-fill: #2a5298;");
         
         // Nút đóng
@@ -586,15 +586,15 @@ public class AdminView {
     }
     
     private Button createResetSystemButton() {
-        Button btnReset = new Button("Reset System");
+        Button btnReset = new Button("⚠️ Reset System");
         btnReset.setStyle("-fx-background-color: #dc3545; -fx-text-fill: white; -fx-font-weight: bold; -fx-font-size: 12px;");
         
         btnReset.setOnAction(e -> {
             // ✅ Cảnh báo lần 1
             Alert warning1 = new Alert(Alert.AlertType.WARNING);
-            warning1.setTitle("DANGER WARNING");
-            warning1.setHeaderText("THIS ACTION WILL DELETE ALL DATA!");
-            warning1.setContentText("All orders, customers, and products will be permanently deleted.\n\nAre you sure you want to continue?");
+            warning1.setTitle("⚠️ CẢNH BÁO NGUY HIỂM");
+            warning1.setHeaderText("HÀNH ĐỘNG NÀY SẼ XÓA TOÀN BỘ DỮ LIỆU!");
+            warning1.setContentText("Tất cả đơn hàng, khách hàng, sản phẩm sẽ bị xóa vĩnh viễn.\n\nBạn có chắc chắn muốn tiếp tục?");
             warning1.getButtonTypes().clear();
             warning1.getButtonTypes().addAll(ButtonType.YES, ButtonType.NO);
             
@@ -627,7 +627,7 @@ public class AdminView {
             if (result.isPresent() && "admin123".equals(result.get())) {
                 // ✅ Mật khẩu đúng - Xác nhận lần cuối
                 Alert warning2 = new Alert(Alert.AlertType.ERROR);
-                warning2.setTitle("FINAL CONFIRMATION");
+                warning2.setTitle("⚠️ FINAL CONFIRMATION");
                 warning2.setHeaderText("THE DATABASE WILL BE COMPLETELY DELETED!");
                 warning2.setContentText("Press OK to delete ALL data and close the program.\n\nIRREVERSIBLE ACTION!");
                 warning2.getButtonTypes().clear();
@@ -637,7 +637,7 @@ public class AdminView {
                     try {
                         resetDatabase();
                         showAlert("The database has been successfully reset!\n\nThe program will close now.");
-                        System.exit(0);
+                        System.exit(0); // ✅ Đóng chương trình
                     } catch (Exception ex) {
                         showAlert("❌ Error when reset database: " + ex.getMessage());
                         ex.printStackTrace();
@@ -656,27 +656,19 @@ public class AdminView {
              Statement stmt = conn.createStatement()) {
             
             // Xóa dữ liệu theo thứ tự ngược lại với khóa ngoại
-//            stmt.execute("DELETE FROM project_invoices");
-//            stmt.execute("DELETE FROM project_order_tracking");
-//            stmt.execute("DELETE FROM project_orders");
-//            stmt.execute("DELETE FROM project_customers");
-//            stmt.execute("DELETE FROM project_products");
-//            stmt.execute("DELETE FROM project_users WHERE username != 'admin'"); // Giữ lại admin
+            stmt.execute("DELETE FROM project_invoices");
+            stmt.execute("DELETE FROM project_order_tracking");
+            stmt.execute("DELETE FROM project_orders");
+            stmt.execute("DELETE FROM project_customers");
+            stmt.execute("DELETE FROM project_products");
+            stmt.execute("DELETE FROM project_users WHERE username != 'admin'"); // Giữ lại admin
             
             // Reset sequence (PostgreSQL)
-//            stmt.execute("ALTER SEQUENCE project_products_id_seq RESTART WITH 1");
-//            stmt.execute("ALTER SEQUENCE project_customers_id_seq RESTART WITH 1");
-//            stmt.execute("ALTER SEQUENCE project_orders_id_seq RESTART WITH 1");
-//            stmt.execute("ALTER SEQUENCE project_invoices_id_seq RESTART WITH 1");
-//            stmt.execute("ALTER SEQUENCE project_order_tracking_id_seq RESTART WITH 1");
-        	
-        	 stmt.execute("DROP TABLE IF EXISTS project_invoices CASCADE");
-        	 stmt.execute("DROP TABLE IF EXISTS project_order_tracking CASCADE");
-        	 stmt.execute("DROP TABLE IF EXISTS project_orders CASCADE");
-        	 stmt.execute("DROP TABLE IF EXISTS project_customers CASCADE");
-        	 stmt.execute("DROP TABLE IF EXISTS project_products CASCADE");
-        	 stmt.execute("DROP TABLE IF EXISTS project_users CASCADE");
-        	 
+            stmt.execute("ALTER SEQUENCE project_products_id_seq RESTART WITH 1");
+            stmt.execute("ALTER SEQUENCE project_customers_id_seq RESTART WITH 1");
+            stmt.execute("ALTER SEQUENCE project_orders_id_seq RESTART WITH 1");
+            stmt.execute("ALTER SEQUENCE project_invoices_id_seq RESTART WITH 1");
+            stmt.execute("ALTER SEQUENCE project_order_tracking_id_seq RESTART WITH 1");
             
             System.out.println(" The database has been successfully reset.!");
         }
