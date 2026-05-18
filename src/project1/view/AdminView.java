@@ -548,7 +548,16 @@ public class AdminView {
                 String phone = txtPhone.getText().trim();
                 String email = txtEmail.getText().trim();
                 String address = txtAddress.getText().trim();
+                String phonePattern = "^\\+?[0-9]{9,14}$";
                 
+                if (!phone.matches(phonePattern)) {
+                    showAlert("Invalid Phone\nPhone number must be 9-10 digits!");
+                    txtPhone.requestFocus();
+                    return;
+                }
+               
+            	showAlert("Please enter customer phone or email!");
+
                 if (customer == null) {
                     CustomerDAO.addCustomer(name, phone, email, address);
                 } else {

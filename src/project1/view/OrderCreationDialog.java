@@ -163,8 +163,8 @@ public class OrderCreationDialog {
         lblTotal.setStyle("-fx-font-size: 16px; -fx-font-weight: bold; -fx-text-fill: #2a5298;");
         
         // Nút điều khiển
-        Button btnSave = new Button("💾 Save Order");
-        Button btnCancel = new Button("❌ Cancel");
+        Button btnSave = new Button("Save Order");
+        Button btnCancel = new Button("Cancel");
         
         btnSave.setStyle("-fx-background-color: #2196F3; -fx-text-fill: white; -fx-font-weight: bold; -fx-padding: 8 20 8 20;");
         btnCancel.setStyle("-fx-background-color: #f44336; -fx-text-fill: white; -fx-font-weight: bold; -fx-padding: 8 20 8 20;");
@@ -230,7 +230,7 @@ public class OrderCreationDialog {
         // Nút xóa
         TableColumn<OrderItem, Void> colAction = new TableColumn<>("Action");
         colAction.setCellFactory(param -> new TableCell<OrderItem, Void>() {
-            private final Button btn = new Button("❌ Remove");
+            private final Button btn = new Button("Remove");
             {
                 btn.setStyle("-fx-text-fill: #f44336; -fx-cursor: hand; -fx-font-weight: bold;");
                 btn.setOnAction(event -> {
@@ -286,7 +286,7 @@ public class OrderCreationDialog {
                 }
                 existing.setQuantity(newQty);
                 itemsTable.refresh();
-                showAlert("✅ Updated quantity for \"" + product.getName() + "\" to " + newQty + " units");
+                showAlert("Updated quantity for \"" + product.getName() + "\" to " + newQty + " units");
             } else {
                 // Thêm mới
                 items.add(new OrderItem(
@@ -295,7 +295,7 @@ public class OrderCreationDialog {
                     qty,
                     product.getPrice()
                 ));
-                showAlert("✅ Added \"" + product.getName() + "\" to order!");
+                showAlert("Added \"" + product.getName() + "\" to order!");
             }
             
             // Trừ số lượng trong kho NGAY LẬP TỨC
@@ -310,7 +310,7 @@ public class OrderCreationDialog {
             refreshProductList();
             
         } catch (NumberFormatException e) {
-            showAlert("⚠️ Please enter a valid quantity (positive number)!");
+            showAlert("Please enter a valid quantity (positive number)!");
         }
     }
     
@@ -320,12 +320,21 @@ public class OrderCreationDialog {
     
     private void saveOrder() {
         // 1. Validation khách hàng
-        String customerInput = txtCustomer.getText().trim();
+    	String customerInput = txtCustomer.getText().trim();
         if (customerInput.isEmpty()) {
-            showAlert("⚠️ Please enter customer phone or email!");
+        	String phonePattern = "^\\+?[0-9]{9,14}$";
+           
+            if (!customerInput.matches(phonePattern)) {
+                showAlert("Invalid Phone\nPhone number must be 9-10 digits!");
+                txtCustomer.requestFocus();
+                return;
+            }
+           
+        	showAlert("Please enter customer phone or email!");
             txtCustomer.requestFocus();
             return;
         }
+
         
         // 2. Tìm khách hàng theo phone hoặc email
         Customer customer = CustomerDAO.getCustomerByPhoneOrEmail(customerInput);
